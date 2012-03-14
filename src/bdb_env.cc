@@ -40,20 +40,18 @@ bool DbEnv::isTransactional() {
 
 // Start EIO Exposed Methonds
 
-int DbEnv::EIO_Checkpoint(eio_req *req) {
+void DbEnv::EIO_Checkpoint(eio_req *req) {
   EIOCheckpointBaton *baton = static_cast<EIOCheckpointBaton *>(req->data);
 
   if (baton->object == NULL ||
       dynamic_cast<DbEnv *>(baton->object)->_env == NULL) {
-    return 0;
+    return;
   }
 
   DB_ENV *&env = dynamic_cast<DbEnv *>(baton->object)->_env;
 
   baton->status =
       env->txn_checkpoint(env, baton->kbytes, baton->minutes, baton->flags);
-
-  return 0;
 }
 
 // Start V8 Exposed Methods
