@@ -65,10 +65,10 @@ Db::~Db() {
 
 // Start EIO Methods
 
-int Db::EIO_Get(eio_req *req) {
+void Db::EIO_Get(eio_req *req) {
   EIODbBaton *baton = static_cast<EIODbBaton *>(req->data);
   if (baton->object == NULL || dynamic_cast<Db *>(baton->object)->_db == NULL)
-    return 0;
+    return;
 
   Db *dbObj = dynamic_cast<Db *>(baton->object);
   DB *&db = dbObj->_db;
@@ -80,8 +80,6 @@ int Db::EIO_Get(eio_req *req) {
   baton->status = db->get(db, _txn, &(baton->key), &(baton->val), baton->flags);
 
   TXN_END(dbObj, baton->status);
-
-  return 0;
 }
 
 int Db::EIO_AfterGet(eio_req *req) {
@@ -111,10 +109,10 @@ int Db::EIO_AfterGet(eio_req *req) {
 }
 
 
-int Db::EIO_CursorGet(eio_req *req) {
+void Db::EIO_CursorGet(eio_req *req) {
   EIODbBaton *baton = static_cast<EIODbBaton *>(req->data);
   if (baton->object == NULL || dynamic_cast<Db *>(baton->object)->_db == NULL)
-    return 0;
+    return;
 
   Db *dbObj = dynamic_cast<Db *>(baton->object);
   DB *&db = dbObj->_db;
@@ -171,7 +169,6 @@ int Db::EIO_CursorGet(eio_req *req) {
   if (baton->status == 0 && rc == DB_NOTFOUND) {
     baton->status = DB_NOTFOUND;
   }
-  return 0;
 }
 
 int Db::EIO_AfterCursorGet(eio_req *req) {
@@ -208,10 +205,10 @@ int Db::EIO_AfterCursorGet(eio_req *req) {
   return 0;
 }
 
-int Db::EIO_Put(eio_req *req) {
+void Db::EIO_Put(eio_req *req) {
   EIODbBaton *baton = static_cast<EIODbBaton *>(req->data);
   if (baton->object == NULL || dynamic_cast<Db *>(baton->object)->_db == NULL)
-    return 0;
+    return;
 
   Db *dbObj = dynamic_cast<Db *>(baton->object);
   DB *&db = dbObj->_db;
@@ -222,13 +219,13 @@ int Db::EIO_Put(eio_req *req) {
 
   TXN_END(dbObj, baton->status);
 
-  return 0;
+  return;
 }
 
-int Db::EIO_PutIf(eio_req *req) {
+void Db::EIO_PutIf(eio_req *req) {
   EIODbBaton *baton = static_cast<EIODbBaton *>(req->data);
   if (baton->object == NULL || dynamic_cast<Db *>(baton->object)->_db == NULL)
-    return 0;
+    return;
 
   Db *dbObj = dynamic_cast<Db *>(baton->object);
   DB *&db = dbObj->_db;
@@ -259,14 +256,12 @@ int Db::EIO_PutIf(eio_req *req) {
     free(oldVal.data);
     oldVal.data = NULL;
   }
-
-  return 0;
 }
 
-int Db::EIO_Del(eio_req *req) {
+void Db::EIO_Del(eio_req *req) {
   EIODbBaton *baton = static_cast<EIODbBaton *>(req->data);
   if (baton->object == NULL || dynamic_cast<Db *>(baton->object)->_db == NULL)
-    return 0;
+    return;
 
   Db *dbObj = dynamic_cast<Db *>(baton->object);
   DB *&db = dbObj->_db;
@@ -276,8 +271,6 @@ int Db::EIO_Del(eio_req *req) {
   baton->status = db->del(db, _txn, &(baton->key), baton->flags);
 
   TXN_END(dbObj, baton->status);
-
-  return 0;
 }
 
 // Start V8 Exposed Methods
