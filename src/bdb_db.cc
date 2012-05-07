@@ -288,10 +288,11 @@ v8::Handle<v8::Value> Db::OpenS(const v8::Arguments& args) {
   Db* db = node::ObjectWrap::Unwrap<Db>(args.This());
 
   REQ_STR_ARG(0, file);
-  REQ_INT_ARG(1, type);
-  REQ_INT_ARG(2, flags);
-  REQ_INT_ARG(3, mode);
-  REQ_INT_ARG(4, retries);
+  REQ_STR_ARG(1, dbname);
+  REQ_INT_ARG(2, type);
+  REQ_INT_ARG(3, flags);
+  REQ_INT_ARG(4, mode);
+  REQ_INT_ARG(5, retries);
 
   db->_retries = retries;
 
@@ -300,7 +301,7 @@ v8::Handle<v8::Value> Db::OpenS(const v8::Arguments& args) {
     rc = db->_db->open(db->_db,
                        NULL,  // TODO(mcavage): support DB open as TXN
                        *file,
-                       NULL,  // db
+                       *dbname,
                        static_cast<DBTYPE>(type),
                        flags,
                        mode);
