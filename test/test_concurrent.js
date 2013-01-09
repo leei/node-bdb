@@ -5,7 +5,7 @@ var exec  = require('child_process').exec;
 var fs = require('fs');
 var util = require('util');
 
-var bdb = require('bdb');
+var bdb = require('..');
 var helper = require('./helper');
 
 // setup

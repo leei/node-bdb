@@ -2,7 +2,7 @@
 var assert = require('assert');
 var exec  = require('child_process').exec;
 var fs = require('fs');
-var BDB = require('bdb');
+var BDB = require('..');
 var helper = require('./helper');
 
 var stat = undefined;

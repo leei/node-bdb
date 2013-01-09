@@ -3,7 +3,7 @@ var assert = require('assert');
 var Buffer = require('buffer').Buffer;
 var exec  = require('child_process').exec;
 var fs = require('fs');
-var BDB = require('bdb');
+var BDB = require('..');
 var helper = require('./helper');
 
 // setup
