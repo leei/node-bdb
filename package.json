@@ -9,6 +9,9 @@
   },
   "author": "Mark Cavage <mcavage@gmail.com>",
   "keywords": ["bdb", "berkeleydb", "db", "database", "storage"],
+  "dependencies": {
+    "bindings": "latest"
+  },
   "devDependencies": {
     "jslint": ">=0.0.3"
   },
