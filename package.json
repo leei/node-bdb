@@ -1,5 +1,5 @@
 {
-  "name" : "bdb",
+  "name" : "bdb-fork-grimen",
   "version" : "0.0.1",
   "main" : "bdb_bindings",
   "description" : "Berkeley DB(5.X) bindings for node",
