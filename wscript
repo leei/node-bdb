@@ -5,11 +5,11 @@ import Options, Utils
 from os import unlink, symlink, chdir, popen, system
 from os.path import exists, join
 
-VERSION = '0.1'
+VERSION = '0.2'
 REVISION = popen("git log | head -n1 | awk '{printf \"%s\", $2}'").readline()
 
 cwd = os.getcwd()
-bdb_root = cwd + '/deps/db-5.1.25'
+bdb_root = cwd + '/deps/db-6.0.20'
 bdb_bld_dir = bdb_root + '/build_unix'
 srcdir = '.'
 blddir = 'build'
@@ -52,7 +52,7 @@ def configure(conf):
     bdb_libpath = []
     if o.shared_bdb_includes: bdb_includes.append(o.shared_bdb_includes)
     if o.shared_bdb_libpath: bdb_libpath.append(o.shared_bdb_libpath)
-    conf.check_cxx(lib='db-5',
+    conf.check_cxx(lib='db-6',
                    header_name="db.h",
                    use_libstore='BDB',
                    includes=bdb_includes,
@@ -122,9 +122,9 @@ def build(bld):
     os.chdir(bdb_bld_dir)
     subprocess.check_call(['make', '-j', '3'])
     os.chdir(cwd)
-    obj.staticlib = "db-5.1"
+    obj.staticlib = "db-6.0"
   else:
-    obj.lib = "db-5"
+    obj.lib = "db-6"
 
 def test(ctx):
   system('node test/test_open.js')
